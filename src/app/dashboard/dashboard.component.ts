@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ITask } from '../shared/models/task';
+import { TasksService } from '../shared/services/tasks.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,10 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  public tasks: ITask[];
 
-  constructor() { }
+  constructor(private tasksService: TasksService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
+    this.getTasks()
   }
 
+  addSecondTask(){
+
+  }
+
+
+  getTasks(){
+    this.tasksService.getTasks()
+    .subscribe(res => {
+      this.tasks = res;
+      console.log(this.tasks)
+    })
+  }
 }

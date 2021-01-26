@@ -9,6 +9,6 @@ export class AppComponent implements OnInit{
   title = 'jira-clone';
 
   ngOnInit(){
-    localStorage.removeItem('token');
+    
   }
 }

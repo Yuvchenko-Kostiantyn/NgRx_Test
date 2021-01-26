@@ -8,49 +8,60 @@ import {
     MetaReducer,
     on,
     State,
+    Store,
 } from '@ngrx/store'
 import { environment } from 'src/environments/environment'
+import { ITask } from '../shared/models/task';
+import { TasksActions } from '../shared/models/tasks-actions.enum';
 import { UserActions } from '../shared/models/user-actions.enum';
 import { IUserData } from '../shared/models/user-data';
 import * as Actions from './storeMain.actions';
 
 export interface AppState{
     userData: IUserData
-    tasks: Array<any>,
-    users: Array<any>
+    tasks: Array<ITask>,
+    users: Array<IUserData>
 }
 
 export const initialState: AppState  = {
     userData: {
-        email: '',
+        id: null,
+        username: '',
         password: ''
     },
-    tasks: [],
-    users: [],
+    tasks: [
+        { id: 1, title: 'Test title', description: 'Test dedcription', created_by: 1, assignee: 2},
+        { id: 2, title: 'Test title 2', description: 'Test dedcription 2', created_by: 1, assignee: 2 }
+    ],
+    users: [
+        { id: 1, username: 'Firstname_Lastname', password: '123456' },
+        { id: 1, username: 'SomeUsername', password: '654321' }
+    ],
 }
 
-function loginReducer(state: IUserData, action): IUserData {
+function loginReducer(state: IUserData = initialState.userData, action): IUserData {
     switch(action.type){
         case UserActions.LOG_USER_IN: 
             localStorage.setItem('token', '12345');
-            return {...state, email: action.email, password: action.password}
+            return {...state, username: action.username, password: action.password}
         default: 
             return state;
     }
 }
 
-function taskReducer(state, action){
+function taskReducer(state: Array<ITask> = initialState.tasks, action){
     switch(action.type){
-        case 'a':
-            return state;
+        case TasksActions.ADD_TASK:
+            console.log(state)
+            return [...state, action];
         default: 
             return state;
     }
 }
 
-function usersReducer(state, action) {
+function usersReducer(state: Array<IUserData>, action) {
     switch(action.type){
-        case 'a': 
+        case 'a':  
             return state;
         default: 
             return state
