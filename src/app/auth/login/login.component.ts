@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IUserData } from 'src/app/shared/models/user-data';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -11,12 +12,20 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup
+  private users: IUserData[];
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService, 
+    private router: Router) { }
 
   ngOnInit(): void {
+    this.authService.getUsers().subscribe(res => {
+      console.log(res)
+      this.users
+    });
     this.loginForm = this.fb.group({
-      email: [''],
+      username: [''],
       password: ['']
     })
   }

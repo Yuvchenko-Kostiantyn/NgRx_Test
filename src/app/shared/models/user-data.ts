@@ -1,4 +1,5 @@
 export interface IUserData {
-    email: string,
+    id: number | null,
+    username: string,
     password: string
 }

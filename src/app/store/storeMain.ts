@@ -8,50 +8,58 @@ import {
     MetaReducer,
     on,
     State,
+    Store,
 } from '@ngrx/store'
 import { environment } from 'src/environments/environment'
+import { ITask } from '../shared/models/task';
+import { TasksActions } from '../shared/models/tasks-actions.enum';
 import { UserActions } from '../shared/models/user-actions.enum';
 import { IUserData } from '../shared/models/user-data';
-import * as Actions from './storeMain.actions';
 
 export interface AppState{
     userData: IUserData
-    tasks: Array<any>,
-    users: Array<any>
+    tasks: Array<ITask>,
+    users: Array<IUserData>
 }
 
 export const initialState: AppState  = {
     userData: {
-        email: '',
+        id: null,
+        username: '',
         password: ''
     },
     tasks: [],
     users: [],
 }
 
-function loginReducer(state: IUserData, action): IUserData {
+function loginReducer(state: IUserData = initialState.userData, action): IUserData {
     switch(action.type){
         case UserActions.LOG_USER_IN: 
             localStorage.setItem('token', '12345');
-            return {...state, email: action.email, password: action.password}
+            return {...state, username: action.username, password: action.password}
         default: 
             return state;
     }
 }
 
-function taskReducer(state, action){
+function taskReducer(state: Array<ITask> = initialState.tasks, action){
     switch(action.type){
-        case 'a':
-            return state;
+        case TasksActions.LOAD_ALL_TASKS: 
+            return [...state, ...action.tasks];
+
+        case TasksActions.ADD_TASK:
+            return [...state, action];
+            
         default: 
             return state;
     }
 }
 
-function usersReducer(state, action) {
+function usersReducer(state: Array<IUserData> = initialState.users, action) {
     switch(action.type){
-        case 'a': 
-            return state;
+        case UserActions.LOAD_ALL_USERS:  
+            console.log(action)
+            return [...state, ...action.users];
         default: 
             return state
     }

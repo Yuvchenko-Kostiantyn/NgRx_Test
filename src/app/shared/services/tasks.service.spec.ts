@@ -1,11 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 
-import { AuthGuard } from './auth.guard';
+import { TasksService } from './tasks.service';
 
-describe('AuthGuard', () => {
-  let guard: AuthGuard;
+describe('TasksService', () => {
+  let service: TasksService;
   let initialState = {
     userData: {
         id: null,
@@ -18,13 +17,12 @@ describe('AuthGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
       providers: [provideMockStore({initialState})]
     });
-    guard = TestBed.inject(AuthGuard);
+    service = TestBed.inject(TasksService);
   });
 
   it('should be created', () => {
-    expect(guard).toBeTruthy();
+    expect(service).toBeTruthy();
   });
 });
