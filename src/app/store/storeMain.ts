@@ -15,7 +15,6 @@ import { ITask } from '../shared/models/task';
 import { TasksActions } from '../shared/models/tasks-actions.enum';
 import { UserActions } from '../shared/models/user-actions.enum';
 import { IUserData } from '../shared/models/user-data';
-import * as Actions from './storeMain.actions';
 
 export interface AppState{
     userData: IUserData
@@ -29,14 +28,8 @@ export const initialState: AppState  = {
         username: '',
         password: ''
     },
-    tasks: [
-        { id: 1, title: 'Test title', description: 'Test dedcription', created_by: 1, assignee: 2},
-        { id: 2, title: 'Test title 2', description: 'Test dedcription 2', created_by: 1, assignee: 2 }
-    ],
-    users: [
-        { id: 1, username: 'Firstname_Lastname', password: '123456' },
-        { id: 1, username: 'SomeUsername', password: '654321' }
-    ],
+    tasks: [],
+    users: [],
 }
 
 function loginReducer(state: IUserData = initialState.userData, action): IUserData {
@@ -51,18 +44,22 @@ function loginReducer(state: IUserData = initialState.userData, action): IUserDa
 
 function taskReducer(state: Array<ITask> = initialState.tasks, action){
     switch(action.type){
+        case TasksActions.LOAD_ALL_TASKS: 
+            return [...state, ...action.tasks];
+
         case TasksActions.ADD_TASK:
-            console.log(state)
             return [...state, action];
+            
         default: 
             return state;
     }
 }
 
-function usersReducer(state: Array<IUserData>, action) {
+function usersReducer(state: Array<IUserData> = initialState.users, action) {
     switch(action.type){
-        case 'a':  
-            return state;
+        case UserActions.LOAD_ALL_USERS:  
+            console.log(action)
+            return [...state, ...action.users];
         default: 
             return state
     }

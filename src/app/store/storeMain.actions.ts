@@ -18,6 +18,16 @@ export const loadUserFailure = createAction(
     props<{error: any}>()
 )
 
+export const loadAllUsers = createAction(
+    UserActions.LOAD_ALL_USERS,
+    props<{users: IUserData[]}>()
+)
+
+export const loadAlltasks = createAction(
+    TasksActions.LOAD_ALL_TASKS,
+    props<{tasks: ITask[]}>()
+)
+
 export const addTask = createAction(
     TasksActions.ADD_TASK,
     props<ITask>()

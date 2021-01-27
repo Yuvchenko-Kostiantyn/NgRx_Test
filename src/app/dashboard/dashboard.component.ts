@@ -12,9 +12,10 @@ export class DashboardComponent implements OnInit {
 
   constructor(private tasksService: TasksService) { }
 
-  ngOnInit(): void {  
+  ngOnInit(): void { 
+    this.tasksService.loadAllTasks(); 
     this.getTasks()
-  }
+  }ß
 
   addSecondTask(){
 
