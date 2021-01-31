@@ -20,10 +20,6 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.authService.getUsers().subscribe(res => {
-      console.log(res)
-      this.users
-    });
     this.loginForm = this.fb.group({
       username: [''],
       password: ['']

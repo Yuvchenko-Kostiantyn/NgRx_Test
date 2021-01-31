@@ -23,11 +23,7 @@ export interface AppState{
 }
 
 export const initialState: AppState  = {
-    userData: {
-        id: null,
-        username: '',
-        password: ''
-    },
+    userData: null,
     tasks: [],
     users: [],
 }
@@ -36,7 +32,7 @@ function loginReducer(state: IUserData = initialState.userData, action): IUserDa
     switch(action.type){
         case UserActions.LOG_USER_IN: 
             localStorage.setItem('token', '12345');
-            return {...state, username: action.username, password: action.password}
+            return {id: action.id, password: action.password, username: action.username}
         default: 
             return state;
     }
@@ -58,7 +54,6 @@ function taskReducer(state: Array<ITask> = initialState.tasks, action){
 function usersReducer(state: Array<IUserData> = initialState.users, action) {
     switch(action.type){
         case UserActions.LOAD_ALL_USERS:  
-            console.log(action)
             return [...state, ...action.users];
         default: 
             return state
